@@ -3,7 +3,7 @@
 
 // const ml5 = require("ml5");
 // import * as ml5 from "ml5";
-const sketch = (studentGrades) => {
+const sketch = (studentGrades, callback) => {
   let nn, data, modelInfo, res;
   const options = {
     task: "classification",
@@ -20,8 +20,12 @@ const sketch = (studentGrades) => {
   nn.load(modelInfo, modelLoaded);
   // data = loadJSON("./p5Data.json", () => (data = data.data));
   function modelLoaded() {
-    // console.log("model loaded");
-    nn.classify(studentGrades.slice(-5), handleResults);
+    console.log("model loaded");
+    nn.classify(studentGrades.slice(-5), (err, res) => {
+      if (err) {
+        console.log(err);
+      } else callback(res[0]);
+    });
   }
   // function setup() {
   //   //   let tags = data.shift();
@@ -51,15 +55,15 @@ const sketch = (studentGrades) => {
   //     nn.classify(grades, handleResults);
   //   }
   // }
-  function handleResults(error, result) {
-    if (error) {
-      console.error(error);
-      // return;
-    }
-    // console.log(result);
-    res = result;
-    // return result
-  }
+  // function handleResults(error, result) {
+  //   if (error) {
+  //     console.error(error);
+  //     // return;
+  //   }
+  //   console.log(result);
+  //   res = result;
+  //   // return result
+  // }
   // return res;
 };
 export default sketch;

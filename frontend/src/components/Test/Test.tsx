@@ -45,8 +45,8 @@ function Test({ user, userDetails }: any) {
           setDataSet(data[0].firstExam);
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
 
   useEffect(() => {
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -80,6 +80,7 @@ function Test({ user, userDetails }: any) {
           console.log(data);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
   const handleClick = async (choice: any) => {
@@ -104,21 +105,25 @@ function Test({ user, userDetails }: any) {
   };
 
   return (
-    <div style={{ marginLeft: "14rem", marginTop: "3rem" }}>
-      {
-        dataSet.length ?
-          <div>
-            <ScoreArea correct={correct} incorrect={incorrect} />
-            {
-              current === dataSet.length ? (
-                <h4>thank you your grade is {(100 / dataSet.length) * correct}/100</h4>
-              ) : (
-                  <QuizArea handleClick={handleClick} dataSet={dataSet[current]} />
-                )}
-          </div>
-          :
-          <div style={{ marginTop: "10rem" }}> <h2>no exams yet</h2> </div>
-      }
+    <div style={{ marginLeft: "10rem", marginTop: "10rem" }}>
+      {dataSet.length ? (
+        <div>
+          {/* <ScoreArea correct={correct} incorrect={incorrect} /> */}
+          {current === dataSet.length ? (
+            <h4>
+              thank you your grade is{" "}
+              {((100 / dataSet.length) * correct).toFixed(2)}/100
+            </h4>
+          ) : (
+            <QuizArea handleClick={handleClick} dataSet={dataSet[current]} />
+          )}
+        </div>
+      ) : (
+        <div style={{ marginTop: "10rem" }}>
+          {" "}
+          <h2>no exams yet</h2>{" "}
+        </div>
+      )}
     </div>
   );
 }
